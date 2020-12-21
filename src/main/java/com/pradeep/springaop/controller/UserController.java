@@ -14,8 +14,6 @@ public class UserController {
 
     @PostMapping("/")
     public String test(@RequestBody User user){
-        user.setFirstName("Ross");
-        user.setLastName("Geller");
         String test = null;
         try {
             test =  userService.test("1");

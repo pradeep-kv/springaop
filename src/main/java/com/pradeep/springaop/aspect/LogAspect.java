@@ -5,17 +5,19 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
+@Order(1)
 public class LogAspect {
 
     @Pointcut("execution (* com.pradeep..*(..))")
-    private void exePackageWildcard(){}
+    public void exePackageWildcard(){}
 
     @Pointcut("execution(* com.pradeep.springaop.service..*(..)))")
-    private void exePackageServiceWildcard(){}
+    public void exePackageServiceWildcard(){}
 
     @Pointcut("execution(* com.pradeep.springaop.model..*(..))")
     private void exePackageModelWildcard(){}
@@ -25,11 +27,11 @@ public class LogAspect {
 
     @Before(value = "exePackageWithOutModelWildcard()")
     public void beforeTest(){
-        System.out.println("Test Before AOP working");
+        System.out.println("Test Before LogAspect AOP working");
     }
 
     @After(value = "exePackageServiceWildcard()")
     public void Aftertest(){
-        System.out.println("Test After AOP working");
+        System.out.println("Test After LogAspect AOP working");
     }
 }
