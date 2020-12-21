@@ -16,9 +16,10 @@ public class UserController {
     public String test(@RequestBody User user){
         String test = null;
         try {
-            test =  userService.test("1");
+            test =  userService.test("1", false);
         } catch (Exception e) {
             e.printStackTrace();
+            test = "Test failed";
         }
         return test;
     }

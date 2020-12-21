@@ -1,9 +1,7 @@
 package com.pradeep.springaop.aspect;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
@@ -11,10 +9,10 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-@Order(2)
+@Order(1)
 public class MonitoringAspect {
 
-    @Before(value = "com.pradeep.springaop.aspect.LogAspect.exePackageWildcard()")
+    @Before(value = "com.pradeep.springaop.aspect.LogAspect.exePackageServiceWildcard()")
     public void beforeTest(JoinPoint joinPoint){
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         System.out.println("Test Before MonitoringAspect AOP working with order for method : \n" + signature);
@@ -29,5 +27,19 @@ public class MonitoringAspect {
     @After(value = "com.pradeep.springaop.aspect.LogAspect.exePackageServiceWildcard()")
     public void Aftertest(){
         System.out.println("Test After MonitoringAspect AOP working with order");
+    }
+
+    @AfterReturning(value = "com.pradeep.springaop.aspect.LogAspect.exePackageServiceWildcard()", returning = "result")
+    public void afterReturning(JoinPoint joinPoint, String result){
+        String signature = joinPoint.getSignature().toShortString();
+        System.out.println("Test After Returning MonitoringAspect AOP working with order for method : \n" + signature);
+        System.out.println("Result ::" + result);
+    }
+
+    @AfterThrowing(value = "com.pradeep.springaop.aspect.LogAspect.exePackageServiceWildcard()", throwing = "exception")
+    public void afterThrowing(JoinPoint joinPoint, Throwable exception){
+        String signature = joinPoint.getSignature().toShortString();
+        System.out.println("Test After Throwing MonitoringAspect AOP working with order for method : \n" + signature);
+        System.out.println("Exception class :: " + exception.getClass());
     }
 }
